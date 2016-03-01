@@ -1,51 +1,56 @@
+/**
+ * java基础练习题-的第一小题
+ * 
+ * @author	zhyz
+ * @creatdate	2016-03-01
+ *  
+ */
 package study;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-public class File2buf {
-	/*
-	 * 将文件内容转换成byte数组返回,如果文件不存在或者读入错误返回null
-	 * 通过一个输入流指向文件，一个输出流指向字符数组
-	 * 从文件中按字节数组制定长度读取，然后写入输出流
-	 * 最后将输出流转换成数组
+/**
+ * 该类用于将制定的文件，以字节数组的形式读取
+ * 拥有唯一file2buf方法，返回制定文件的字符数组
+ * 可增加print方法，将读取的内容打印在控制台
+ *
+ * @author	zhyz
+ * @creatdate	20160301
+ */
+public class File2buf {	
+	/**
+	 * 通过从文件输入流按制定字节长度循环读取，然后写入到一个字节数组输出流中
+	 * 利用字符数组输出流toByteArray()将缓冲区字节转换为数组返回
+	 * 
+	 * @param fobj是一个文件对象参数。为null时，返回空
+	 * @return byte[]
+	 * @throws IOException	
 	 */
 	public byte[] file2buf(File fobj) throws IOException {
 		byte[] result = null;
 		if (fobj == null){
-			result = null;
+			return null ;
 		}	
 		FileInputStream in = new FileInputStream(fobj);
-		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
-		//以8个字节为单位读取文件
+		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);//初始化制定长度，如果在写入过程中缓冲区大小不够，会自动扩容
 		result = new byte[8];
 		int len;
 		while((len=in.read(result))!=-1){
 			out.write(result, 0, len);
+			/*
+			 * write(byte[] b, int off, int len)就是将数组 b 中的 len 个字节按顺序写入输出流。
+			 * 所以如果 b 为 null，则抛出 NullPointerException。
+			 * 如果 off 为负，或 len 为负，又或者 off+len 大于数组 b 的长度，则抛出 IndexOutOfBoundsException。
+			 * 如果 len 为零，则不写入字节。否则，首先写入字节 b[off]，然后写入字节 b[off+1]，依此类推；最后一个写入字节是 b[off+len-1]。
+			 */
 		}
+		//释放资源
 		in.close();
 		out.close();
 		result = out.toByteArray();
 		return result;
 	}
 	
-	/*
-	 * 测试单元
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		File f = new File("D:/笔记.txt");
-		File2buf F2B = new File2buf();
-		byte[] ret;
-		try {
-			ret = F2B.file2buf(f);
-			System.out.print(new String(ret));
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
