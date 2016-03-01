@@ -22,9 +22,9 @@ import java.io.IOException;
 public class File2buf {	
 	/**
 	 * 通过从文件输入流按制定字节长度循环读取，然后写入到一个字节数组输出流中
-	 * 利用字符数组输出流toByteArray()将缓冲区字节转换为数组返回
+	 * 利用字符数组输出流toByteArray()函数将缓冲区字节转换为数组返回
 	 * 
-	 * @param fobj是一个文件对象参数。为null时，返回空
+	 * @param fobj是一个文件对象参数。如果fobj不存在或者为null，则返回null
 	 * @return byte[]
 	 * @throws IOException	
 	 */
@@ -52,5 +52,17 @@ public class File2buf {
 		result = out.toByteArray();
 		return result;
 	}
-	
+	/**
+	 * Issues：在测试用例中避免所要打开的文件不存在的情况，不符合测试用例的规范原则
+	 * 解决方案：本着怀疑一切用户输入的原则，故增加本方法保证file2buf的输入参数的有效性，
+	 * 
+	 * @return 返回一个文件，如果打开失败，或者文件不存在，则返回null
+	 */
+	public File fileOpen(String path){
+		File file = new File(path);
+		if(!file.exists()){
+			file = null;
+		}
+		return file;
+	}
 }
