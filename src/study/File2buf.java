@@ -54,8 +54,9 @@ public class File2buf {
 	}
 	/**
 	 * Issues：在测试用例中避免所要打开的文件不存在的情况，不符合测试用例的规范原则
-	 * 解决方案：本着怀疑一切用户输入的原则，故增加本方法保证file2buf的输入参数的有效性，
+	 * 解决方案：本着怀疑一切用户输入的原则，故增加本方法保证file2buf的参数输入，
 	 * 
+	 * @param path是文件的路径
 	 * @return 返回一个文件，如果打开失败，或者文件不存在，则返回null
 	 */
 	public File fileOpen(String path){

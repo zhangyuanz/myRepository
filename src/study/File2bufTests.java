@@ -7,8 +7,10 @@
 package study;
 
 import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.IOException;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +21,8 @@ import org.junit.Test;
  *
  */
 public class File2bufTests{
-	private static File2buf obj = new File2buf();
+	private static File2buf obj = new File2buf();//首先创建一个被测试类的对象
+	
 	private static File file ;
 	private static File file1;
 	/**
@@ -64,7 +67,9 @@ public class File2bufTests{
 	 * 但是当有很多个测试函数时，每次在After中关闭资源会比较浪费时间，都放在AfterClass中可以提高运行效率
 	 */
 	@AfterClass
-	public static void destory(){
+	public static void tearDownAfterClass() throws Exception {
 		obj = null;
+		file = null;
+		file1 = null;
 	}
 }
