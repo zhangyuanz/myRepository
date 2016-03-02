@@ -28,28 +28,32 @@ public class To16H {
 		if(a==0){
 			return "0x0H";
 		}
-		String Hex = null;
+		String hex = null;
 		int n=0;
-		int[] b = new int[8];
+		char[] b = new char[8];
 		while(a!=0){
-			b[n]=a%16;//b是一个临时存放a余数的数组，初始化长度为8，有可能产生越界，需要根据a的最大可能值确定一个合理的size
+			int x = a%16;//b是一个临时存放a余数的数组，初始化长度为8，有可能产生越界，需要根据a的最大可能值确定一个合理的size
+			b[n] = (x<10)?(char)(x+48):(char)(x+55);
 			a=a/16;
 			n++;
 		}
-		char[] c = new char[n];//根据实际的长度初始化c，不浪费内存
+		//反序
+		for(int i = 0;i < n/2;i++){
+			char temp = b[i];
+			b[i] = b[n-1-i];
+			b[n-1-i] = temp;
+		}
+		/*char[] c = new char[n];//根据实际的长度初始化c，不浪费内存
 		for(int i=0;i<n;i++){
 			if(b[i]<10){
 				c[n-i-1]=(char)(b[i]+48);
 			}else{
 				c[n-i-1]=(char)(b[i]+55);
 			}
-		}
-		Hex = new String(c);
-		Hex = "0x"+Hex+"H";
-		//释放临时占用的资源
-		b = null;
-		c = null;
-		return Hex;
+		}*/
+		hex = new String(b);
+		hex = "0x"+hex+"H";
+		return hex;
 		
 	}
 }
