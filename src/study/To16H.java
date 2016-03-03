@@ -18,16 +18,16 @@ public class To16H {
 	 * @return  str 是转换后得到的字符串 			
 	 */
 	public  String int2Hex(int a){
-		String str = null;
+		//String str = null;
 		//java整数范围检查
 		if(a < -2147483648||a > 2147483647){
 			throw new IllegalArgumentException("整数越界");
 			//throw 抛出异常？
 		}else{
+			//0做特殊处理，按此方法得到的是0xH不是预期的0x0H，所以作此处理
 			if(a==0){
 				return "0x0H";
 			}
-			
 			StringBuilder hex = new StringBuilder();
 			if(a < 0){//负数处理
 				a = a*(-1);
@@ -37,7 +37,7 @@ public class To16H {
 					hex.append(c);
 					a=a/16;
 				}
-				str = "-0x"+hex.reverse().toString()+'H';
+				return "-0x"+hex.reverse().toString()+'H';
 			}else{//正数处理
 				while(a!=0){
 					int x = a%16;
@@ -45,9 +45,8 @@ public class To16H {
 					hex.append(c);
 					a=a/16;
 				}
-				str = "0x"+hex.reverse().toString()+'H';
+				return "0x"+hex.reverse().toString()+'H';
 			}
 		}
-		return str;
 	}
 }

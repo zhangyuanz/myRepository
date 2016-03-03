@@ -32,7 +32,7 @@ public class File2bufTests{
 	   if(!file.exists()){
 		 file = null;
 		}
-	 * <pre>
+	 * </pre>
 	 * @throws Exception
 	 */
 	/**
@@ -75,17 +75,4 @@ public class File2bufTests{
 		byte[] array = obj.file2buf(null);
 		assertEquals(array,null);
 	}
-	/**
-	 * 释放测试用例所占用的资源
-	 * 20160301-14:30
-	 * 去掉@After中file与file1的释放，放在AfterClass中，因为本例只有一个函数测试，After与AfterClass没有必要分开写
-	 * 但是当有很多个测试函数时，每次在After中关闭资源会比较浪费时间，都放在AfterClass中可以提高运行效率
-	 */
-	/*
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		obj = null;
-		file = null;
-		file1 = null;
-	}*/
 }

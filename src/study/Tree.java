@@ -6,6 +6,8 @@
  */
 package study;
 
+import java.util.ArrayList;
+
 /**
  * 满二叉树类，拥有内部类定义数的节点的结构，与遍历方法
  * <pre>
@@ -52,13 +54,20 @@ public class Tree {
 		 * 如果指针已经到最后一位，则父队列下降一层，即孩子节点数组变成新的父节点数组
 		 */
 		for(int i = 1;i<array.length;i++){
-			add(children,insert(parent[max],array[i]));
+			if(parent[max].left == null){
+				parent[max].left = new TNode(array[i]);
+				add(children,parent[max].left);
+			}else if(parent[max].right == null){
+				parent[max].right = new TNode(array[i]);
+				add(children,parent[max].right);
+			}
 			if(isFull(parent[max])){
-				max++;System.out.println(max);
+				max++;
+				System.out.println("max:"+max);
 			}
 			if(max==parent.length){
 				parent = children;
-				children = new TNode[2*max];
+				children = new TNode[(int)Math.pow(2, Level)];
 				init(children);
 				Level++;
 				max = 0;
@@ -69,6 +78,19 @@ public class Tree {
 		}
 		
 	}
+	/**
+	 * 向一个节点中插入新节点，先左后右的原则
+	 * @param t是新节点
+	 * @param value是节点对应的字符值
+	 * @return	插入成功则返回新节点，否则返回null
+	 */
+	/*private void insert(TNode t,char value){
+		if(t.left == null){
+			t.left = new TNode(value);
+		}else if(t.right == null){
+			t.right = new TNode(value);
+		}	
+	}*/
 	/**
 	 * 判断一个节点的孩子是否已经满员
 	 * @param boolean
@@ -96,7 +118,7 @@ public class Tree {
 		}
 	}
 	/**
-	 * 初始化一个节点数组，防止空指针异常
+	 * 初始化一个节点数组
 	 * @param c
 	 */
 	private void init(TNode[] c){
@@ -105,20 +127,145 @@ public class Tree {
 		}	
 	}
 	/**
-	 * 向一个节点中插入新节点，先左后右的原则
-	 * @param t是新节点
-	 * @param value是节点对应的字符值
-	 * @return	插入成功则返回新节点，否则返回null
+	 * 手动构造ABCDEFGH二叉树，并赋值给根节点root
+	 * <pre>
+	 *            A
+	 *          /   \
+	 *         B     C
+	 *        / \   /  \
+	 *       D   E F    G
+	 *      /
+	 *     H 
+	 * </pre>
 	 */
-	private TNode insert(TNode t,char value){
-		TNode node = null;
-		if(t.left == null){
-			t.left = new TNode(value);
-			node = t.left;
-		}else if(t.right == null){
-			t.right = new TNode(value);
-			node = t.right;
-		}
-		return node;	
+	public void creat2(){
+		TNode t = new TNode('A');
+		t.left = new TNode('B');
+		t.right = new TNode('C');
+		t.left.left = new TNode('D');
+		t.left.right = new TNode('E');
+		t.right.left = new TNode('F');
+		t.right.right = new TNode('G');
+		t.left.left.left = new TNode('H');
+		root = t;
+		Level = 4;
 	}
+	
+	/**
+	 * 
+	 * <pre>
+	 *            A
+	 *           /  \
+	 *          B    C
+	 *          \   /  \
+	 *           E F    G 
+	 * </pre>
+	 */
+	public void creat3(){
+		TNode t = new TNode('A');
+		t.left = new TNode('B');
+		t.right = new TNode('C');
+		//t.left.left = new TNode('D');
+		t.left.right = new TNode('E');
+		t.right.left = new TNode('F');
+		t.right.right = new TNode('G');
+		root = t;
+		Level = 3;
+	}
+
+	/**
+	 * 
+	 * <pre>
+	 *             A
+	 *           /  \
+	 *          B    C
+	 *         /\   /  
+	 *        D  E F     
+	 * </pre>
+	 */
+	public void creat4(){
+		TNode t = new TNode('A');
+		t.left = new TNode('B');
+		t.right = new TNode('C');
+		t.left.left = new TNode('D');
+		t.left.right = new TNode('E');
+		t.right.left = new TNode('F');
+		//t.right.right = new TNode('G');
+		root = t;
+		Level = 3;
+	}
+
+	/**
+	 * <pre>
+	 *            A
+	 *           /  \
+	 *          B    C
+	 *         /\   
+	 *        D  E 
+	 * </pre>
+	 */
+	public void creat5(){
+		TNode t = new TNode('A');
+		t.left = new TNode('B');
+		t.right = new TNode('C');
+		t.left.left = new TNode('D');
+		t.left.right = new TNode('E');
+		//t.right.left = new TNode('F');
+		//t.right.right = new TNode('G');
+		root = t;
+		Level = 3;
+	}
+	/**
+	 * 给定字符串自动构造二叉树
+	 * <pre>
+	 *     ABC        ABCD><>      ABC<E<>      ABC<EF>     AB>DE<>    AB
+	 *      A            A            A           A           A
+	 *     / \          / \          / \         /  \        /  
+	 *    B   C        B   C        B   C       B    C      B    
+	 *                /              \           \  /      / \
+	 *               D               E           E F      D   E
+	 * </pre>
+	 * @param treeStr
+	 */
+	public void creat(String treeStr){
+		char[] values = treeStr.toCharArray();
+		root = new TNode(values[0]);
+		ArrayList<TNode> Up = new ArrayList<TNode>();
+		Up.add(root);
+		ArrayList<TNode> Down = new ArrayList<TNode>();
+		int i = 1;
+		for(;i < values.length;){
+			for(TNode temp:Up){
+				if(temp.left == null){
+					temp.left = new TNode(values[i]);
+					Down.add(temp.left);
+					i++;
+				}else if(temp.right == null){
+					temp.right = new TNode(values[i]);
+					Down.add(temp.right);
+					i++;
+				}else{
+					break;
+				}
+			}
+			Up.removeAll(Up);
+			//去掉值为<和>的节点
+			Up = Down;
+			Down.removeAll(Down);
+		}
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
