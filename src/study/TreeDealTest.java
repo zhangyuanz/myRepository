@@ -2,26 +2,32 @@ package study;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 /**
  * 自动构造二叉树，并且通过先序遍历，中序遍历方法判断其准确性
+ * 
  * @author Administrator
  *
  */
 public class TreeDealTest {
-	
+
 	private static TreeDeal dealTree = new TreeDeal();
+
 	/**
 	 * 递归插入法向一个节点中插入新数据
 	 * 
-	 * @param t 是一个被插入的节点
-	 * @param c 是一个待插入的数据
+	 * @param t
+	 *            是一个被插入的节点
+	 * @param c
+	 *            是一个待插入的数据
+	 *            
 	 * @return 返回根节点
 	 */
 	public TNode insert(TNode t, char c) {
 		if (t == null) {
 			t = new TNode(c);
 		} else {
-			if (c > t.value) {
+			if (c <= t.value) {// 左节点永远小于右节点
 				t.left = insert(t.left, c);
 			} else {
 				t.right = insert(t.right, c);
@@ -29,18 +35,21 @@ public class TreeDealTest {
 		}
 		return t;
 	}
+
 	/**
 	 * 根据字符串自动构造二叉树
 	 * 
-	 * @param str 字符串参数
+	 * @param str
+	 *            字符串参数
+	 *            
 	 * @return 返回二叉树的根节点
 	 */
-	public TNode creat(String str){
+	public TNode creat(String str) {
 		char[] array = str.toCharArray();
 		TNode root = null;
-		for(int i = 0;i < array.length;i ++){
-			
-			root = insert(root,array[i]);
+		for (int i = 0; i < array.length; i++) {
+
+			root = insert(root, array[i]);
 		}
 		return root;
 	}
@@ -52,25 +61,28 @@ public class TreeDealTest {
 	public void testgetLevel() {
 		Assert.assertEquals(4, dealTree.getLevel(creat("ABCD")));
 	}
+
 	/**
 	 * 临时测试函数
 	 */
 	@Test
-	public void test(){
+	public void test() {
 		System.out.println();
 		System.out.print("先序遍历：");
-		foreach(creat("ABC"));
-		System.out.print("中序遍历：");
-		mid(creat("ABC"));
-		System.out.println();
-		System.out.print("先序遍历：");
-		foreach(creat("ABCDEFGH"));
-		System.out.print("中序遍历：");
-		mid(creat("ABCDEFGH"));
+		foreach(creat("ABCD"));
+		System.out.print("后序遍历：");
+		mid(creat("ABCD"));
+		
+		Assert.assertEquals("A", nodesToString (dealTree.TreeLevel(creat("ABCD"),1)));
+		Assert.assertEquals("B", nodesToString (dealTree.TreeLevel(creat("ABCD"),2)));
+		Assert.assertEquals("C", nodesToString (dealTree.TreeLevel(creat("ABCD"),3)));
+		Assert.assertEquals("D", nodesToString (dealTree.TreeLevel(creat("ABCD"),4)));
+		Assert.assertNull(dealTree.TreeLevel(creat("ABCD"), 5));
 	}
-	
+
 	/**
 	 * 将节点数组的值连接成字符串
+	 * 
 	 * @param nodes
 	 * @return
 	 */
@@ -88,6 +100,7 @@ public class TreeDealTest {
 		return str;
 
 	}
+
 	/**
 	 * 先序遍历//检查二叉树正确与否
 	 * 
@@ -104,10 +117,11 @@ public class TreeDealTest {
 			foreach(t.right);
 		}
 	}
+
 	/**
 	 * 后序序遍历
 	 */
-	public void mid(TNode t){
+	public void mid(TNode t) {
 		if (t.left != null) {
 			foreach(t.left);
 		}
