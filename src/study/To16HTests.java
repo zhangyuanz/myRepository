@@ -36,7 +36,8 @@ public class To16HTests {
 	@Test
 	public void testBoundary(){
 		test("0x7FFFFFFFH",2147483647);
-		test("-0x(0000000H",-2147483648);
+		test("-0x7FFFFFFFH",-2147483647);
+		test("-080000000H",-2147483648);
 		
 	}
 	public void test(String exp,int ori){
