@@ -11,13 +11,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 /**
  * 该类用于将制定的文件，以字节数组的形式读取
  * 拥有唯一file2buf方法，返回制定文件的字符数组
  * @author	zhyz
  * @creatdate	20160301
  */
-public class File2buf {	
+public class File2buf {
 	/**
 	 * 实现从把一个文件的内容写进一个字节数组。如果不存在或者为null，或者只是一个路径，则返回null
 	 * 
@@ -26,24 +27,42 @@ public class File2buf {
 	 * @throws IOException	
 	 */
 	public byte[] file2buf(File fobj) throws IOException {
-		if (fobj == null){
-			return null ;		}	
-		if (!fobj.exists()||fobj.isDirectory()){
-			return null ;
+		// 空判断要在最开始？
+		if (fobj == null) {
+			return null;
 		}
-		FileInputStream in = new FileInputStream(fobj);
-		//根据文件大小创建字节数组流的大小，防止内存浪费
-		ByteArrayOutputStream out = new ByteArrayOutputStream((int)fobj.length());
-		byte[] bytes = new byte[4096];//常用4096
-		int len;
-		try{
-			while((len=in.read(bytes))!=-1){
-				out.write(bytes, 0, len);
+		//不存在或者只是一个路径，直接返回null
+		if (!fobj.exists() || fobj.isDirectory()) {
+			return null;
+		}
+		if (fobj.length() > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("不支持大小超过2G");
+		} else {
+			FileInputStream in = null;
+			ByteArrayOutputStream out = null;
+			try {
+				in = new FileInputStream(fobj);
+				// 根据文件大小创建字节数组流的大小，防止内存浪费
+				out = new ByteArrayOutputStream((int) fobj.length());
+				byte[] bytes = new byte[4096];// 常用4096
+				int len;
+				while ((len = in.read(bytes)) != -1) {
+					out.write(bytes, 0, len);
+				}
+				return out.toByteArray();
+			} finally {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-		}finally{
-			in.close();
-			out.close();
 		}
-		return out.toByteArray();
 	}
 }

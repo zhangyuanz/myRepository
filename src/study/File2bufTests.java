@@ -22,27 +22,10 @@ import org.junit.Test;
 public class File2bufTests{
 	private static File2buf obj = new File2buf();//首先创建一个被测试类的对象
 	/**
-	 * 20160301-12:50
-	 * 在方法测试之前，要为file制定一个已经存在的文件，如果文件不存在，则为null
-	 * 20160301-14:10
-	 * 在测试单元做参数输入的异常处理不符合规范,所以修改为在被测类中添加fileopen方法，
-	 * 在此before中调用
-	 * <pre>
-	 * file = new File("D:/test.txt");
-	   if(!file.exists()){
-		 file = null;
-		}
-	 * </pre>
-	 * @throws Exception
-	 */
-	/**
-	 * 20160301-11:40
-	 * 测试file2buf方法，定义array接受函数返回值，并断言是否是期望的结果
-	 * 20160301-14:25
-	 * 用array测试正常输入的结果，用array1测试异常：当文件不存在时的结果,arrray2测只是一个路径的情况
+	 * 测试file2buf方法正常输入
 	 * @throws IOException
 	 */
-	@Test
+	@Test 
 	public void testfile2buf() throws IOException {
 		byte[] array = obj.file2buf(new File("d:/test.txt"));
 		String text = "﻿这是一个测试用的文本，是为了测试java基础练习题一的file2buf函数的实现而存在的。";
@@ -75,4 +58,15 @@ public class File2bufTests{
 		byte[] array = obj.file2buf(null);
 		assertEquals(array,null);
 	}
+	/**
+	 * 测试int长度，最大值最小值的
+	 */
+	/*
+	@Test
+	public void testint(){
+		System.out.println("int长度："+Integer.SIZE);
+		System.out.println("int最大值："+Integer.MAX_VALUE);
+		System.out.println("int最小值："+Integer.MIN_VALUE);
+	}
+	*/
 }
