@@ -133,7 +133,7 @@ public class TreeDealTest0 {
 		TNode tree = creat2();
 		System.out.println();
 		System.out.print("先序遍历：");
-		foreach(tree);
+		first(tree);
 		System.out.println();
 		
 		Assert.assertEquals("A",nodesToString(dealTree.TreeLevel(tree, 1)));
@@ -160,7 +160,7 @@ public class TreeDealTest0 {
 		TNode tree = creat3();
 		System.out.println();
 		System.out.print("先序遍历：");
-		foreach(tree);
+		first(tree);
 		System.out.println();
 		Assert.assertEquals("A",nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BC",nodesToString(dealTree.TreeLevel(tree, 2)));
@@ -183,7 +183,7 @@ public class TreeDealTest0 {
 		TNode tree = creat4();
 		System.out.println();
 		System.out.print("先序遍历：");
-		foreach(tree);
+		first(tree);
 		System.out.println();
 		Assert.assertEquals("A",nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BC",nodesToString(dealTree.TreeLevel(tree, 2)));
@@ -206,7 +206,7 @@ public class TreeDealTest0 {
 		TNode tree = creat5();
 		System.out.println();
 		System.out.print("先序遍历：");
-		foreach(tree);
+		first(tree);
 		System.out.println();
 		Assert.assertEquals("A",
 				nodesToString(dealTree.TreeLevel(tree, 1)));
@@ -242,14 +242,14 @@ public class TreeDealTest0 {
 	 * @param t
 	 * 
 	 */
-	public void foreach(TNode t) {
+	public void first(TNode t) {
 		// 用于检查正确性
 		System.out.print(t.value + "-");
 		if (t.left != null) {
-			foreach(t.left);
+			first(t.left);
 		}
 		if (t.right != null) {
-			foreach(t.right);
+			first(t.right);
 		}
 	}
 }
