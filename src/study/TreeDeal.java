@@ -8,7 +8,7 @@ public class TreeDeal {
 	 *            是二叉树根节点
 	 * @param n
 	 *            二叉树具体那一层
-	 *            
+	 * 
 	 * @return 返回一个节点数组
 	 */
 	public TNode[] TreeLevel(TNode t, int n) {
@@ -16,38 +16,34 @@ public class TreeDeal {
 			return null;
 		}
 		TNode[] TNodes = { t };// 第一层的节点
-		for (int i = 1; i < n; i++) {// i是树的层数
+		for (int i = 1; i < n; i++) {// i是树的第i层数
 			TNode[] temp = new TNode[(int) Math.pow(2, i)];// 临时数组
-			for (TNode node : TNodes) {
-				if (node.left != null) {// 如果左节点存在，就把左节点压入新的队列之中，即写入队列末尾
-					for (int j = 0; j < temp.length; j++) {// 找到数组第一个非空元素，即队列末尾，插入其中
-						if (temp[j] == null) {
-							temp[j] = node.left;
-							break;// break跳出来节省时间
-						}
+			for (int j = 0;j < TNodes.length;j++) {
+				if(TNodes[j] != null){
+					if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
+						add2Array(temp,TNodes[j].left);
 					}
-				}
-				if (node.right != null) {
-					for (int j = 0; j < temp.length; j++) {
-						if (temp[j] == null) {
-							temp[j] = node.right;
-							break;
-						}
+					if (TNodes[j].right != null) {// 如果右节点存在，就把左节点压入新的数组之中
+						add2Array(temp,TNodes[j].right);
 					}
 				}
 			}
 			TNodes = temp;
 		}
 		// 以上执行过后TNodes便是想要的结果
-		System.out.print("第" + n + "层： ");
-		for (int i = 0; i < TNodes.length; i++) {
-			if (TNodes[i] != null) {
-				System.out.print(TNodes[i].value + "-");
-			}
-		}
 		return TNodes;
 	}
-
+	/**
+	 * 将一个节点插入节点数组末尾
+	 */
+	public void add2Array(TNode[] array , TNode t){
+		for (int j = 0; j < array.length; j++) {// 找到数组第一个非空元素，插入其中
+			if (array[j] == null) {
+				array[j] = t;
+				break;
+			}
+		}
+	}
 	/**
 	 * 获得二叉树的深度
 	 * 
