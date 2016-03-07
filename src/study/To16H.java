@@ -21,7 +21,7 @@ public class To16H {
 		//String str = null;
 		//java整数范围检查
 		if(a < Integer.MIN_VALUE||a > Integer.MAX_VALUE){
-			throw new IllegalArgumentException("非法参数");
+			throw new IllegalArgumentException("整数参数溢出");
 		}else{
 			//0做特殊处理，按此方法得到的是0xH不是预期的0x0H，所以作此处理
 			if(a==0){
