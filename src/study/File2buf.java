@@ -56,13 +56,13 @@ public class File2buf {
 					in.close();
 				} catch (IOException e) {
 					e.printStackTrace();
-				} finally {
-					try {
-						out.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
 				}
+				try {
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
 		}
 	}

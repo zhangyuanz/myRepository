@@ -69,11 +69,11 @@ public class TreeDealTest {
 	@Test
 	public void testABCD() {
 		TNode tree = creat("ABCD");
-		//先通过3中遍历方法检查所创建的二叉树正确性
-		Assert.assertEquals("ABCD",first(tree));
-		Assert.assertEquals("ABCD",mid(tree));
-		Assert.assertEquals("DCBA",last(tree));
-		
+		// 先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("ABCD", first(tree));
+		Assert.assertEquals("ABCD", mid(tree));
+		Assert.assertEquals("DCBA", last(tree));
+
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -97,11 +97,11 @@ public class TreeDealTest {
 	@Test
 	public void testDCBA() {
 		TNode tree = creat("DCBA");
-		//先通过3中遍历方法检查所创建的二叉树正确性
-		Assert.assertEquals("DCBA",first(tree));
-		Assert.assertEquals("ABCD",mid(tree));
-		Assert.assertEquals("ABCD",last(tree));
-		
+		// 先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("DCBA", first(tree));
+		Assert.assertEquals("ABCD", mid(tree));
+		Assert.assertEquals("ABCD", last(tree));
+
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -123,11 +123,11 @@ public class TreeDealTest {
 	@Test
 	public void testBACD() {
 		TNode tree = creat("BACD");
-		//先通过3中遍历方法检查所创建的二叉树正确性
+		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("BACD", first(tree));
 		Assert.assertEquals("ABCD", mid(tree));
 		Assert.assertEquals("ADCB", last(tree));
-		
+
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("AC", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -148,11 +148,11 @@ public class TreeDealTest {
 	@Test
 	public void testCBAD() {
 		TNode tree = creat("CBAD");
-		//先通过3中遍历方法检查所创建的二叉树正确性
+		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("CBAD", first(tree));
 		Assert.assertEquals("ABCD", mid(tree));
 		Assert.assertEquals("ABDC", last(tree));
-		
+
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BD", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -173,17 +173,17 @@ public class TreeDealTest {
 	@Test
 	public void testDBACFEG() {
 		TNode tree = creat("DBACFEG");
-		//先通过3中遍历方法检查所创建的二叉树正确性
+		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("DBACFEG", first(tree));
 		Assert.assertEquals("ABCDEFG", mid(tree));
 		Assert.assertEquals("ACBEGFD", last(tree));
-		
+
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BF", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("ACEG", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertNull(dealTree.TreeLevel(tree, 4));
 	}
-	
+
 	/**
 	 * 将节点数组的值连接成字符串
 	 * 

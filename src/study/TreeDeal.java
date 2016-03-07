@@ -1,10 +1,8 @@
 package study;
+
 /**
- * 由二叉树处理相关的操作封装的类
- * 拥3个方法：
- * 		TreeLevel返回n层节点
- * 		add2Array将节点插入数组末尾
- * 		getLevel获得树的深度
+ * 由二叉树处理相关的操作封装的类 拥3个方法： TreeLevel返回n层节点 add2Array将节点插入数组末尾 getLevel获得树的深度
+ * 
  * @author Administrator
  *
  */
@@ -22,32 +20,34 @@ public class TreeDeal {
 	public TNode[] TreeLevel(TNode t, int n) {
 		if (n > getLevel(t) || n <= 0) {
 			return null;
-		}
-		TNode[] TNodes = { t };// 第一层的节点		
-		for (int i = 1; i < n; i++) {// i是树的第i层数
-			TNode[] temp = new TNode[(int) Math.pow(2, i)];
-			for (int j = 0; j < TNodes.length; j++) {
-				if (TNodes[j] != null) {
-					if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
-						add2Array(temp, TNodes[j].left);
-					}
-					if (TNodes[j].right != null) {// 如果右节点存在，就把左节点压入新的数组之中
-						add2Array(temp, TNodes[j].right);
+		}else{
+			TNode[] TNodes = { t };// 第一层的节点
+			for (int i = 1; i < n; i++) {// i是树的第i层数
+				TNode[] temp = new TNode[(int) Math.pow(2, i)];
+				for (int j = 0; j < TNodes.length; j++) {
+					if (TNodes[j] != null) {
+						if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
+							add2Array(temp, TNodes[j].left);
+						}
+						if (TNodes[j].right != null) {// 如果右节点存在，就把左节点压入新的数组之中
+							add2Array(temp, TNodes[j].right);
+						}
 					}
 				}
+				TNodes = temp;
+				temp = null;
 			}
-			TNodes = temp;
-			temp = null;
-		}
-		return TNodes;
+			return TNodes;
+		}	
 	}
-	/**	
+
+	/**
 	 * 将一个节点插入节点数组末尾
 	 * 
-	 * @param array 
-	 * 				是被插入的数组
+	 * @param array
+	 *            是被插入的数组
 	 * @param t
-	 * 				是待插入的节点
+	 *            是待插入的节点
 	 */
 	public void add2Array(TNode[] array, TNode t) {
 		for (int j = 0; j < array.length; j++) {// 找到数组第一个非空元素，插入其中
