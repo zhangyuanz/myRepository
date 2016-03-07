@@ -38,32 +38,32 @@ public class File2buf {
 		}
 		if (fobj.length() > 2 * Integer.MAX_VALUE + 1) {
 			throw new IllegalArgumentException("不支持大小超过2G文件");
-		} else {
-			FileInputStream in = null;
-			ByteArrayOutputStream out = null;
-			try {
-				in = new FileInputStream(fobj);
-				// 根据文件大小创建字节数组流的大小，防止内存浪费
-				out = new ByteArrayOutputStream((int) fobj.length());
-				byte[] bytes = new byte[4096];// 常用4096
-				int len;
-				while ((len = in.read(bytes)) != -1) {
-					out.write(bytes, 0, len);
-				}
-				return out.toByteArray();
-			} finally {
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			}
 		}
+		FileInputStream in = null;
+		ByteArrayOutputStream out = null;
+		try {
+			in = new FileInputStream(fobj);
+			// 根据文件大小创建字节数组流的大小，防止内存浪费
+			out = new ByteArrayOutputStream((int) fobj.length());
+			byte[] bytes = new byte[4096];// 常用4096
+			int len;
+			while ((len = in.read(bytes)) != -1) {
+				out.write(bytes, 0, len);
+			}
+			return out.toByteArray();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+	
 	}
 }

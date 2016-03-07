@@ -21,27 +21,25 @@ public class To16H {
 	 * @return str 是转换后得到的字符串
 	 */
 	public String int2Hex(int a) {
-		// String str = null;
 		// java整数范围检查
 		if (a < Integer.MIN_VALUE || a > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("整数参数溢出");
+		} 
+		// 0做特殊处理，按此方法得到的是0xH不是预期的0x0H，所以作此处理
+		if (a == 0) {
+			return "0x0H";
+		}
+		if (a == Integer.MIN_VALUE) {
+			return "-080000000H";
 		} else {
-			// 0做特殊处理，按此方法得到的是0xH不是预期的0x0H，所以作此处理
-			if (a == 0) {
-				return "0x0H";
-			}
-			if (a == Integer.MIN_VALUE) {
-				return "-080000000H";
-			} else {
-				StringBuilder hex = new StringBuilder();
-				if (a < 0) {// 负数处理
-					a = a * (-1);
-					_int2hex(hex, a);
-					return "-0x" + hex.reverse().toString() + 'H';
-				} else {// 正数处理
-					_int2hex(hex, a);
-					return "0x" + hex.reverse().toString() + 'H';
-				}
+			StringBuilder hex = new StringBuilder();
+			if (a < 0) {// 负数处理
+				a = a * (-1);
+				_int2hex(hex, a);
+				return "-0x" + hex.reverse().toString() + 'H';
+			} else {// 正数处理
+				_int2hex(hex, a);
+				return "0x" + hex.reverse().toString() + 'H';
 			}
 		}
 	}
