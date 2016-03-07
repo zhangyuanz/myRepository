@@ -27,7 +27,7 @@ public class TreeDealTest {
 		if (t == null) {
 			t = new TNode(c);
 		} else {
-			if (c <= t.value) {// 左节点永远小于右节点
+			if (c <= t.value) {// 左节点永远小于右节点的规则
 				t.left = insert(t.left, c);
 			} else {
 				t.right = insert(t.right, c);
@@ -48,7 +48,6 @@ public class TreeDealTest {
 		char[] array = str.toCharArray();
 		TNode root = null;
 		for (int i = 0; i < array.length; i++) {
-
 			root = insert(root, array[i]);
 		}
 		return root;
@@ -69,8 +68,12 @@ public class TreeDealTest {
 	 */
 	@Test
 	public void testABCD() {
-		System.out.println("深度：" + dealTree.getLevel(creat("ABCD")));
 		TNode tree = creat("ABCD");
+		//先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("ABCD",first(tree));
+		Assert.assertEquals("ABCD",mid(tree));
+		Assert.assertEquals("DCBA",last(tree));
+		
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -82,12 +85,23 @@ public class TreeDealTest {
 	 * 测试用例ABCD,只有右节点的二叉树
 	 * 
 	 * <pre>
-	 * D / C / B / A
+	 *         D 
+	 *        /
+	 *       C
+	 *      /
+	 *     B
+	 *    /
+	 *   A
 	 * </pre>
 	 */
 	@Test
 	public void testDCBA() {
 		TNode tree = creat("DCBA");
+		//先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("DCBA",first(tree));
+		Assert.assertEquals("ABCD",mid(tree));
+		Assert.assertEquals("ABCD",last(tree));
+		
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -109,6 +123,11 @@ public class TreeDealTest {
 	@Test
 	public void testBACD() {
 		TNode tree = creat("BACD");
+		//先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("BACD", first(tree));
+		Assert.assertEquals("ABCD", mid(tree));
+		Assert.assertEquals("ADCB", last(tree));
+		
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("AC", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -129,6 +148,11 @@ public class TreeDealTest {
 	@Test
 	public void testCBAD() {
 		TNode tree = creat("CBAD");
+		//先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("CBAD", first(tree));
+		Assert.assertEquals("ABCD", mid(tree));
+		Assert.assertEquals("ABDC", last(tree));
+		
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BD", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 3)));
@@ -149,12 +173,17 @@ public class TreeDealTest {
 	@Test
 	public void testDBACFEG() {
 		TNode tree = creat("DBACFEG");
+		//先通过3中遍历方法检查所创建的二叉树正确性
+		Assert.assertEquals("DBACFEG", first(tree));
+		Assert.assertEquals("ABCDEFG", mid(tree));
+		Assert.assertEquals("ACBEGFD", last(tree));
+		
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 1)));
 		Assert.assertEquals("BF", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("ACEG", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertNull(dealTree.TreeLevel(tree, 4));
 	}
-
+	
 	/**
 	 * 将节点数组的值连接成字符串
 	 * 
@@ -183,15 +212,17 @@ public class TreeDealTest {
 	 *            是需要遍历的二叉树的根节点
 	 * 
 	 */
-	public void first(TNode t) {
+	public String first(TNode t) {
 		// 用于检查正确性
-		System.out.print(t.value + "-");
+		StringBuilder str = new StringBuilder();
+		str.append(t.value);
 		if (t.left != null) {
-			first(t.left);
+			str.append(first(t.left));
 		}
 		if (t.right != null) {
-			first(t.right);
+			str.append(first(t.right));
 		}
+		return str.toString();
 	}
 
 	/**
@@ -200,14 +231,16 @@ public class TreeDealTest {
 	 * @param t
 	 *            是需要遍历的二叉树的根节点
 	 */
-	public void mid(TNode t) {
+	public String mid(TNode t) {
+		StringBuilder str = new StringBuilder();
 		if (t.left != null) {
-			mid(t.left);
+			str.append(mid(t.left));
 		}
-		System.out.print(t.value + "-");
+		str.append(t.value);
 		if (t.right != null) {
-			mid(t.right);
+			str.append(mid(t.right));
 		}
+		return str.toString();
 	}
 
 	/**
@@ -216,13 +249,15 @@ public class TreeDealTest {
 	 * @param t
 	 *            是需要遍历的二叉树的根节点
 	 */
-	public void last(TNode t) {
+	public String last(TNode t) {
+		StringBuilder str = new StringBuilder();
 		if (t.left != null) {
-			last(t.left);
+			str.append(last(t.left));
 		}
 		if (t.right != null) {
-			last(t.right);
+			str.append(last(t.right));
 		}
-		System.out.print(t.value + "-");
+		str.append(t.value);
+		return str.toString();
 	}
 }

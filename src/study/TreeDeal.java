@@ -23,9 +23,9 @@ public class TreeDeal {
 		if (n > getLevel(t) || n <= 0) {
 			return null;
 		}
-		TNode[] TNodes = { t };// 第一层的节点
+		TNode[] TNodes = { t };// 第一层的节点		
 		for (int i = 1; i < n; i++) {// i是树的第i层数
-			TNode[] temp = new TNode[(int) Math.pow(2, i)];// 临时数组
+			TNode[] temp = new TNode[(int) Math.pow(2, i)];
 			for (int j = 0; j < TNodes.length; j++) {
 				if (TNodes[j] != null) {
 					if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
@@ -37,13 +37,17 @@ public class TreeDeal {
 				}
 			}
 			TNodes = temp;
+			temp = null;
 		}
-		// 以上执行过后TNodes便是想要的结果
 		return TNodes;
 	}
-
-	/**
+	/**	
 	 * 将一个节点插入节点数组末尾
+	 * 
+	 * @param array 
+	 * 				是被插入的数组
+	 * @param t
+	 * 				是待插入的节点
 	 */
 	public void add2Array(TNode[] array, TNode t) {
 		for (int j = 0; j < array.length; j++) {// 找到数组第一个非空元素，插入其中
