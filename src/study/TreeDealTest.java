@@ -77,18 +77,12 @@ public class TreeDealTest {
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 4)));
 		Assert.assertNull(dealTree.TreeLevel(creat("ABCD"), 5));
 	}
-	
+
 	/**
 	 * 测试用例ABCD,只有右节点的二叉树
 	 * 
 	 * <pre>
-	 *   		D
-	 *         /
-	 *        C
-	 *       /
-	 *      B 
-	 *     /   
-	 *    A     
+	 * D / C / B / A
 	 * </pre>
 	 */
 	@Test
@@ -100,6 +94,7 @@ public class TreeDealTest {
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 4)));
 		Assert.assertNull(dealTree.TreeLevel(creat("DCBA"), 5));
 	}
+
 	/**
 	 * 测试用例BACD，部分节点只有右子节点
 	 * 
@@ -119,7 +114,7 @@ public class TreeDealTest {
 		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertNull(dealTree.TreeLevel(tree, 4));
 	}
-	
+
 	/**
 	 * 测试用例CBAD，部分节点只有左子节点
 	 * 
@@ -128,7 +123,7 @@ public class TreeDealTest {
 	 *     / \
 	 *    B   D
 	 *   /    
-	 *  A      
+	 *  A
 	 * </pre>
 	 */
 	@Test
@@ -139,7 +134,7 @@ public class TreeDealTest {
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertNull(dealTree.TreeLevel(tree, 4));
 	}
-	
+
 	/**
 	 * 测试用例,测一颗完全二叉树
 	 * 
@@ -148,7 +143,7 @@ public class TreeDealTest {
 	 *      / \
 	 *     B   F
 	 *    /\   /\    
-	 *   A  C E  G 
+	 *   A  C E  G
 	 * </pre>
 	 */
 	@Test
@@ -159,7 +154,6 @@ public class TreeDealTest {
 		Assert.assertEquals("ACEG", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertNull(dealTree.TreeLevel(tree, 4));
 	}
-
 
 	/**
 	 * 将节点数组的值连接成字符串
@@ -186,6 +180,7 @@ public class TreeDealTest {
 	 * 先序遍历//检查二叉树正确与否
 	 * 
 	 * @param t
+	 *            是需要遍历的二叉树的根节点
 	 * 
 	 */
 	public void first(TNode t) {
@@ -201,6 +196,9 @@ public class TreeDealTest {
 
 	/**
 	 * 中序序遍历
+	 * 
+	 * @param t
+	 *            是需要遍历的二叉树的根节点
 	 */
 	public void mid(TNode t) {
 		if (t.left != null) {
@@ -214,6 +212,9 @@ public class TreeDealTest {
 
 	/**
 	 * 后序遍历
+	 * 
+	 * @param t
+	 *            是需要遍历的二叉树的根节点
 	 */
 	public void last(TNode t) {
 		if (t.left != null) {

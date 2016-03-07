@@ -1,5 +1,13 @@
 package study;
-
+/**
+ * 由二叉树处理相关的操作封装的类
+ * 拥3个方法：
+ * 		TreeLevel返回n层节点
+ * 		add2Array将节点插入数组末尾
+ * 		getLevel获得树的深度
+ * @author Administrator
+ *
+ */
 public class TreeDeal {
 	/**
 	 * 将一颗二叉树的第n层节点以数组形式返回，如果层数大于二叉树深度，或者输入负数和0，则返回空
@@ -18,13 +26,13 @@ public class TreeDeal {
 		TNode[] TNodes = { t };// 第一层的节点
 		for (int i = 1; i < n; i++) {// i是树的第i层数
 			TNode[] temp = new TNode[(int) Math.pow(2, i)];// 临时数组
-			for (int j = 0;j < TNodes.length;j++) {
-				if(TNodes[j] != null){
+			for (int j = 0; j < TNodes.length; j++) {
+				if (TNodes[j] != null) {
 					if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
-						add2Array(temp,TNodes[j].left);
+						add2Array(temp, TNodes[j].left);
 					}
 					if (TNodes[j].right != null) {// 如果右节点存在，就把左节点压入新的数组之中
-						add2Array(temp,TNodes[j].right);
+						add2Array(temp, TNodes[j].right);
 					}
 				}
 			}
@@ -33,10 +41,11 @@ public class TreeDeal {
 		// 以上执行过后TNodes便是想要的结果
 		return TNodes;
 	}
+
 	/**
 	 * 将一个节点插入节点数组末尾
 	 */
-	public void add2Array(TNode[] array , TNode t){
+	public void add2Array(TNode[] array, TNode t) {
 		for (int j = 0; j < array.length; j++) {// 找到数组第一个非空元素，插入其中
 			if (array[j] == null) {
 				array[j] = t;
@@ -44,6 +53,7 @@ public class TreeDeal {
 			}
 		}
 	}
+
 	/**
 	 * 获得二叉树的深度
 	 * 
