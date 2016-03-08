@@ -13,7 +13,7 @@ public class To16H {
 	 * 将一个整数转换成字符串，如果输入的整数不合法，则抛出异常，否则返回该整数对应的字符串
 	 * 
 	 * <pre>
-	 * eg:"0x0H"==0;"0xAH"==10;"-0xAH"==-10;
+	 * eg:"0"==0;"AH"==;"-A"==-10;
 	 * </pre>
 	 * 
 	 * @param a
@@ -27,19 +27,19 @@ public class To16H {
 		} 
 		// 0做特殊处理，按此方法得到的是0xH不是预期的0x0H，所以作此处理
 		if (a == 0) {
-			return "0x0H";
+			return "0";
 		}
 		if (a == Integer.MIN_VALUE) {
-			return "-080000000H";
+			return "-800000000";
 		} else {
 			StringBuilder hex = new StringBuilder();
 			if (a < 0) {// 负数处理
 				a = a * (-1);
 				_int2hex(hex, a);
-				return "-0x" + hex.reverse().toString() + 'H';
+				return '-' + hex.reverse().toString();
 			} else {// 正数处理
 				_int2hex(hex, a);
-				return "0x" + hex.reverse().toString() + 'H';
+				return  hex.reverse().toString();
 			}
 		}
 	}
