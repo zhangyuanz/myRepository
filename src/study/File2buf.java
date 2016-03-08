@@ -7,7 +7,6 @@
  */
 package study;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +38,7 @@ public class File2buf {
 			return null;
 		}
 		if (fobj.length() >  Integer.MAX_VALUE ) {
-			throw new WrongParamException("不支持大小超过2G文件");
+			throw new WrongParamException("文件太大");
 		}
 		FileInputStream in = null;
 		//ByteArrayOutputStream out = null;

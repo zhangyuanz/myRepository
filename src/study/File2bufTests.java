@@ -28,9 +28,10 @@ public class File2bufTests {
 	 * 测试file2buf方法正常输入
 	 * 
 	 * @throws IOException
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testfile2buf() throws IOException {
+	public void testfile2buf() throws IOException, WrongParamException {
 		byte[] array = obj.file2buf(new File("d:/test.txt"));
 		String text = "﻿这是一个测试用的文本，是为了测试java基础练习题一的file2buf函数的实现而存在的。";
 		Assert.assertEquals(text, new String(array));
@@ -40,9 +41,10 @@ public class File2bufTests {
 	 * 测试文件不存在
 	 * 
 	 * @throws IOException
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testNotExist() throws IOException {
+	public void testNotExist() throws IOException, WrongParamException {
 		byte[] array = obj.file2buf(new File("d:/test1.txt"));
 		assertEquals(array, null);
 	}
@@ -51,9 +53,10 @@ public class File2bufTests {
 	 * 测试文件输入只是一个路径
 	 * 
 	 * @throws IOException
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testIsDir() throws IOException {
+	public void testIsDir() throws IOException, WrongParamException {
 		byte[] array = obj.file2buf(new File("d:/"));
 		assertEquals(array, null);
 	}
@@ -62,9 +65,10 @@ public class File2bufTests {
 	 * 测试文件输入为空
 	 * 
 	 * @throws IOException
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testNull() throws IOException {
+	public void testNull() throws IOException, WrongParamException {
 		byte[] array = obj.file2buf(null);
 		assertEquals(array, null);
 	}
