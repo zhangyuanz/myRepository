@@ -19,25 +19,25 @@ public class To16HTests {
 	 */
 	@Test
 	public void testint2Hex() {
-		test("-0x1H",-1);
-		test("0x0H",0);
-		test("0x1H",1);
-		test("0xAH",10);
-		test("-0xAH",-10);
-		test("0xBH",11);
-		test("0xFH",15);
-		test("0x10H",16);
-		test("0x64H",100);
-		test("0xFFFFH",65535);
+		test("-1",-1);
+		test("0",0);
+		test("1",1);
+		test("A",10);
+		test("-A",-10);
+		test("B",11);
+		test("F",15);
+		test("10",16);
+		test("64",100);
+		test("FFFF",65535);
 	}
 	/**
 	 * 测试intHex方法参数的边界值
 	 */
 	@Test
 	public void testBoundary(){
-		test("0x7FFFFFFFH",2147483647);
-		test("-0x7FFFFFFFH",-2147483647);
-		test("-080000000H",-2147483648);
+		test("7FFFFFFF",2147483647);
+		test("-7FFFFFFF",-2147483647);
+		test("-800000000",-2147483648);
 		
 	}
 	public void test(String exp,int ori){

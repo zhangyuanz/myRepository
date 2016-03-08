@@ -46,6 +46,8 @@ public class File2buf {
 			in = new FileInputStream(fobj);
 			// 根据文件大小创建字节数组流的大小，防止内存浪费
 			out = new ByteArrayOutputStream((int) fobj.length());
+			//Issues:既然read可以把输入流数据直接独到byte[]数组，为什么要加入yield输出流，再toByteArray呢
+			//in.read(b, off, len)
 			byte[] bytes = new byte[4096];// 常用4096
 			int len;
 			while ((len = in.read(bytes)) != -1) {
