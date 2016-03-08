@@ -6,8 +6,8 @@ package study;
  *
  */
 public class TNode {
-	char value;
-	TNode left, right;
+	private char value;
+	private TNode left, right;
 	/**
 	 * 构造函数
 	 * 
@@ -19,4 +19,34 @@ public class TNode {
 		this.left = null;
 		this.right = null;
 	}
+	/**
+	 * @return the value
+	 */
+	public char getValue() {
+		return value;
+	}
+	
+	/**
+	 * @return the right
+	 */
+	public TNode getRight() {
+		return right;
+	}
+	
+	/**
+	 * @return the left
+	 */
+	public TNode getLeft() {
+		return left;
+	}
+	public void setLeft(TNode insert) {
+		this.left = insert;
+		
+	}
+	public void setRight(TNode insert) {
+		this.right = insert;
+		
+	}
+	
+	
 }
