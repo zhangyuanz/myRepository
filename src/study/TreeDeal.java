@@ -10,6 +10,53 @@ import java.util.LinkedList;
  */
 public class TreeDeal {
 	/**
+	 * 返回一个TNode的LinkedList
+	 * 
+	 * @param root
+	 *            二叉树的根节点
+	 * @param n
+	 *            二叉树的第n层
+	 * @return 返回第n层的节点List
+	 */
+	public LinkedList<TNode> _TreeLevel(TNode root, int n) {
+		LinkedList<TNode> result = new LinkedList<TNode>();
+		if (n == 1) {
+			result.add(root);
+			return result;
+		} else {
+			if (root.getLeft() != null) {
+				result.addAll(_TreeLevel(root.getLeft(), n - 1));
+			}
+			if (root.getRight() != null) {
+				result.addAll(_TreeLevel(root.getRight(), n - 1));
+			}
+			return result;
+		}
+	}
+
+	/**
+	 * 返回一个TNode的节点数组
+	 * 
+	 * @param root
+	 *            二叉树的根节点
+	 * @param n
+	 *            二叉树的第n层
+	 * @return 返回第n层的节点数组
+	 */
+	public TNode[] TreeLevel(TNode root, int n) {
+		if (n <= 0) {
+			return null;
+		}
+		LinkedList<TNode> result = _TreeLevel(root, n);
+		if (result.isEmpty()) {
+			return null;
+		}
+		TNode[] tNodes = result.toArray(new TNode[result.size()]);
+		return tNodes;
+	}
+}	
+	/****************************20160307;提高效率，减少内存使用，但仍然没有递归算法好****************************************/
+	/**
 	 * 将一颗二叉树的第n层节点以数组形式返回，如果层数大于二叉树深度，或者输入负数和0，则返回空
 	 * 
 	 * @param t
@@ -19,7 +66,7 @@ public class TreeDeal {
 	 * 
 	 * @return 返回一个节点数组
 	 * @throws WrongParamException
-	 */
+	 
 	public TNode[] TreeLevel1(TNode root, int n) throws WrongParamException {
 		if (n <= 0) {
 			throw new WrongParamException("n只能是正数");
@@ -52,46 +99,9 @@ public class TreeDeal {
 		}
 		return parent.toArray(new TNode[parentSize]);
 	}
-	/**
-	 * 返回一个TNode的LinkedList
-	 * 
-	 * @param root
-	 * @param n
-	 * @return
-	 */
-	public LinkedList<TNode> _TreeLevel(TNode root,int n){
-		LinkedList<TNode> result = new LinkedList<TNode>();
-		if(n == 1){
-			result.add(root);
-			return result;
-		}else{
-			if(root.getLeft() != null){
-				result.addAll(_TreeLevel(root.getLeft(),n-1));
-			}
-			if(root.getRight() != null){
-				result.addAll(_TreeLevel(root.getRight(),n-1));
-			}
-			return result;
-		}
-	}
-	/**
-	 * 返回一个TNode的节点数组
-	 * 
-	 * @param root
-	 * @param n
-	 * @return
-	 */
-	public TNode[] TreeLevel(TNode root, int n) {
-		if (n <= 0) {
-			return null;
-		}
-		LinkedList<TNode> result = _TreeLevel(root, n);
-		if (result.isEmpty()) {
-			return null;
-		}
-		TNode[] tNodes = result.toArray(new TNode[result.size()]);
-		return tNodes;
-	}
+	*/
+	
+	/*************************************20160304，最初最烂***************************************8************/
 	/**
 	 * 
 	 * Issues:下面的方法效率非常低下
@@ -170,4 +180,4 @@ public class TreeDeal {
 		return (i > j) ? (i + 1) : (j + 1);
 	}
     */
-}
+
