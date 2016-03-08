@@ -75,11 +75,11 @@ public class TreeDealTest {
 		Assert.assertEquals("ABCD", mid(tree));
 		Assert.assertEquals("DCBA", last(tree));
 
-		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel1(tree, 1)));
-		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel1(tree, 2)));
-		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel1(tree, 3)));
-		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel1(tree, 4)));
-		Assert.assertNull(dealTree.TreeLevel1(creat("ABCD"), 5));
+		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 1)));
+		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 2)));
+		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 3)));
+		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 4)));
+		Assert.assertNull(dealTree.TreeLevel(creat("ABCD"), 5));
 	}
 
 	/**
