@@ -8,6 +8,7 @@
 package study;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -52,18 +53,16 @@ public class File2buf {
 			}
 			return out.toByteArray();
 		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+			close(in);
+			close(out);
 		}
 	
+	}
+	private void close(Closeable cls){
+		try {
+			cls.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
