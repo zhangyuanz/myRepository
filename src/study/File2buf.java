@@ -27,8 +27,9 @@ public class File2buf {
 	 *            是一个文件对象参数。
 	 * @return byte[] 是一位字节数组。
 	 * @throws IOException
+	 * @throws WrongParamException 
 	 */
-	public byte[] file2buf(File fobj) throws IOException {
+	public byte[] file2buf(File fobj) throws IOException, WrongParamException {
 		// 空判断要在最开始？
 		if (fobj == null) {
 			return null;
@@ -37,32 +38,45 @@ public class File2buf {
 		if (!fobj.exists() || fobj.isDirectory()) {
 			return null;
 		}
-		if (fobj.length() > 2 * Integer.MAX_VALUE + 1) {
-			throw new IllegalArgumentException("不支持大小超过2G文件");
+		if (fobj.length() >  Integer.MAX_VALUE ) {
+			throw new WrongParamException("不支持大小超过2G文件");
 		}
 		FileInputStream in = null;
-		ByteArrayOutputStream out = null;
+		//ByteArrayOutputStream out = null;
 		try {
+			/**
+			 * 根据文件大小创建字节数组流的大小，防止内存浪费 
+			 * out = new ByteArrayOutputStream((int)fobj.length());  
+			 * byte[] bytes = new byte[4096];
+			 * int len; 
+			 * while ((len = in.read(bytes)) != -1) { 
+			 * 		out.write(bytes, 0, len); 
+			 *  }
+			 * return out.toByteArray();
+			 */
 			in = new FileInputStream(fobj);
-			// 根据文件大小创建字节数组流的大小，防止内存浪费
-			out = new ByteArrayOutputStream((int) fobj.length());
-			//Issues:既然read可以把输入流数据直接独到byte[]数组，为什么要加入yield输出流，再toByteArray呢
-			//in.read(b, off, len)
-			byte[] bytes = new byte[4096];// 常用4096
-			int len;
-			while ((len = in.read(bytes)) != -1) {
-				out.write(bytes, 0, len);
+			int fileLen = (int)fobj.length();
+			byte[] bytes = new byte[fileLen];
+			int len = 0;//每次读取的长度
+			int total = 0;//已经读取的总长度
+			while( (len = in.read(bytes, total, fileLen<4096?fileLen:4096) ) != -1){
+				total = total +len;
+				if(total == fileLen){
+					break;
+				}
 			}
-			return out.toByteArray();
+			return bytes;
 		} finally {
 			close(in);
-			close(out);
+			//close(out);
 		}
 	
 	}
 	private void close(Closeable cls){
 		try {
-			cls.close();
+			if(cls != null){
+				cls.close();
+			}	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
