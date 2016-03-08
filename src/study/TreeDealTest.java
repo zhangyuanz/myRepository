@@ -27,10 +27,10 @@ public class TreeDealTest {
 		if (t == null) {
 			t = new TNode(c);
 		} else {
-			if (c <= t.value) {// 左节点永远小于右节点的规则
-				t.left = insert(t.left, c);
+			if (c <= t.getValue()) {// 左节点永远小于右节点的规则
+				t.setLeft(insert(t.getLeft(), c));
 			} else {
-				t.right = insert(t.right, c);
+				t.setRight(insert(t.getRight(), c));
 			}
 		}
 		return t;
@@ -65,20 +65,21 @@ public class TreeDealTest {
 	 *        \
 	 *         D
 	 * </pre>
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testABCD() {
+	public void testABCD() throws WrongParamException {
 		TNode tree = creat("ABCD");
 		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("ABCD", first(tree));
 		Assert.assertEquals("ABCD", mid(tree));
 		Assert.assertEquals("DCBA", last(tree));
 
-		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 1)));
-		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 2)));
-		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 3)));
-		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel(tree, 4)));
-		Assert.assertNull(dealTree.TreeLevel(creat("ABCD"), 5));
+		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel1(tree, 1)));
+		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel1(tree, 2)));
+		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel1(tree, 3)));
+		Assert.assertEquals("D", nodesToString(dealTree.TreeLevel1(tree, 4)));
+		Assert.assertNull(dealTree.TreeLevel1(creat("ABCD"), 5));
 	}
 
 	/**
@@ -93,9 +94,10 @@ public class TreeDealTest {
 	 *    /
 	 *   A
 	 * </pre>
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testDCBA() {
+	public void testDCBA() throws WrongParamException {
 		TNode tree = creat("DCBA");
 		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("DCBA", first(tree));
@@ -106,7 +108,7 @@ public class TreeDealTest {
 		Assert.assertEquals("C", nodesToString(dealTree.TreeLevel(tree, 2)));
 		Assert.assertEquals("B", nodesToString(dealTree.TreeLevel(tree, 3)));
 		Assert.assertEquals("A", nodesToString(dealTree.TreeLevel(tree, 4)));
-		Assert.assertNull(dealTree.TreeLevel(creat("DCBA"), 5));
+		Assert.assertNull(dealTree.TreeLevel(tree, 5));
 	}
 
 	/**
@@ -119,9 +121,10 @@ public class TreeDealTest {
 	 *       \
 	 *        D
 	 * </pre>
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testBACD() {
+	public void testBACD() throws WrongParamException {
 		TNode tree = creat("BACD");
 		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("BACD", first(tree));
@@ -144,9 +147,10 @@ public class TreeDealTest {
 	 *   /    
 	 *  A
 	 * </pre>
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testCBAD() {
+	public void testCBAD() throws WrongParamException {
 		TNode tree = creat("CBAD");
 		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("CBAD", first(tree));
@@ -169,9 +173,10 @@ public class TreeDealTest {
 	 *    /\   /\    
 	 *   A  C E  G
 	 * </pre>
+	 * @throws WrongParamException 
 	 */
 	@Test
-	public void testDBACFEG() {
+	public void testDBACFEG() throws WrongParamException {
 		TNode tree = creat("DBACFEG");
 		// 先通过3中遍历方法检查所创建的二叉树正确性
 		Assert.assertEquals("DBACFEG", first(tree));
@@ -192,14 +197,10 @@ public class TreeDealTest {
 	 */
 	public String nodesToString(TNode[] nodes) {
 		String str = "";
-		try {
-			for (int i = 0; i < nodes.length; i++) {
-				if (nodes[i] != null) {
-					str = str + nodes[i].value;
-				}
+		for (int i = 0; i < nodes.length; i++) {
+			if (nodes[i] != null) {
+				str = str + nodes[i].getValue();
 			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
 		}
 		return str;
 
@@ -210,17 +211,17 @@ public class TreeDealTest {
 	 * 
 	 * @param t
 	 *            是需要遍历的二叉树的根节点
-	 * 
+	 * @return 返回由节点组成的字符串 
 	 */
 	public String first(TNode t) {
 		// 用于检查正确性
 		StringBuilder str = new StringBuilder();
-		str.append(t.value);
-		if (t.left != null) {
-			str.append(first(t.left));
+		str.append(t.getValue());
+		if (t.getLeft() != null) {
+			str.append(first(t.getLeft()));
 		}
-		if (t.right != null) {
-			str.append(first(t.right));
+		if (t.getRight() != null) {
+			str.append(first(t.getRight()));
 		}
 		return str.toString();
 	}
@@ -230,15 +231,16 @@ public class TreeDealTest {
 	 * 
 	 * @param t
 	 *            是需要遍历的二叉树的根节点
+	 * @return 返回由节点组成的字符串
 	 */
 	public String mid(TNode t) {
 		StringBuilder str = new StringBuilder();
-		if (t.left != null) {
-			str.append(mid(t.left));
+		if (t.getLeft() != null) {
+			str.append(mid(t.getLeft()));
 		}
-		str.append(t.value);
-		if (t.right != null) {
-			str.append(mid(t.right));
+		str.append(t.getValue());
+		if (t.getRight() != null) {
+			str.append(mid(t.getRight()));
 		}
 		return str.toString();
 	}
@@ -248,16 +250,17 @@ public class TreeDealTest {
 	 * 
 	 * @param t
 	 *            是需要遍历的二叉树的根节点
+	 * @return 返回由节点组成的字符串
 	 */
 	public String last(TNode t) {
 		StringBuilder str = new StringBuilder();
-		if (t.left != null) {
-			str.append(last(t.left));
+		if (t.getLeft() != null) {
+			str.append(last(t.getLeft()));
 		}
-		if (t.right != null) {
-			str.append(last(t.right));
+		if (t.getRight() != null) {
+			str.append(last(t.getRight()));
 		}
-		str.append(t.value);
+		str.append(t.getValue());
 		return str.toString();
 	}
 }

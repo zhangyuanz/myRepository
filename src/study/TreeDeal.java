@@ -1,5 +1,7 @@
 package study;
 
+import java.util.LinkedList;
+
 /**
  * 由二叉树处理相关的操作封装的类 拥3个方法： TreeLevel返回n层节点 add2Array将节点插入数组末尾 getLevel获得树的深度
  * 
@@ -7,6 +9,50 @@ package study;
  *
  */
 public class TreeDeal {
+	/**
+	 * 将一颗二叉树的第n层节点以数组形式返回，如果层数大于二叉树深度，或者输入负数和0，则返回空
+	 * 
+	 * @param t
+	 *            是二叉树根节点
+	 * @param n
+	 *            二叉树具体那一层
+	 * 
+	 * @return 返回一个节点数组
+	 * @throws WrongParamException 
+	 */
+	public TNode[] TreeLevel1 (TNode root, int n) throws WrongParamException{
+		if(n <= 0){
+			throw new WrongParamException("n只能是正数");
+		}
+		LinkedList<TNode> parent = new LinkedList<TNode>();
+		parent.add(root);
+		int parentSize = 1;
+		int childSize = 0;
+		for(int level = 1;level < n;level ++){
+			for(int i = 0;i < parentSize;i++){
+				if(parent.get(i).getLeft()!= null){
+					parent.add(parent.get(i).getLeft());
+					childSize ++;
+				}
+				if(parent.get(i).getRight()!= null){
+					parent.add(parent.get(i).getRight());
+					childSize ++;
+				}	
+			}
+			if(childSize == 0){
+				//throw new WrongParamException("n大于二叉树root的深度");
+				return null;
+			}else{
+				for(int i = 0;i < parentSize;i++){
+					parent.removeFirst();
+				}
+				parentSize = childSize;
+				childSize = 0;
+			}	
+		}
+		return parent.toArray(new TNode[parentSize]);
+		
+	}
 	/**
 	 * 将一颗二叉树的第n层节点以数组形式返回，如果层数大于二叉树深度，或者输入负数和0，则返回空
 	 * 
@@ -26,11 +72,11 @@ public class TreeDeal {
 				TNode[] temp = new TNode[(int) Math.pow(2, i)];
 				for (int j = 0; j < TNodes.length; j++) {
 					if (TNodes[j] != null) {
-						if (TNodes[j].left != null) {// 如果左节点存在，就把左节点压入新的数组之中
-							add2Array(temp, TNodes[j].left);
+						if (TNodes[j].getLeft() != null) {// 如果左节点存在，就把左节点压入新的数组之中
+							add2Array(temp, TNodes[j].getLeft());
 						}
-						if (TNodes[j].right != null) {// 如果右节点存在，就把左节点压入新的数组之中
-							add2Array(temp, TNodes[j].right);
+						if (TNodes[j].getRight() != null) {// 如果右节点存在，就把左节点压入新的数组之中
+							add2Array(temp, TNodes[j].getRight());
 						}
 					}
 				}
@@ -72,14 +118,14 @@ public class TreeDeal {
 			return 0;
 		}
 		// 先遍历二叉树的左子树的深度，
-		if (t.left != null) {
-			i = getLevel(t.left);
+		if (t.getLeft() != null) {
+			i = getLevel(t.getLeft());
 		} else {
 			i = 0;
 		}
 		// 然后再遍历二叉树右子树的深度。
-		if (t.right != null) {
-			j = getLevel(t.right);
+		if (t.getRight() != null) {
+			j = getLevel(t.getRight());
 		} else {
 			j = 0;
 		}
