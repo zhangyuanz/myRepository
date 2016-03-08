@@ -20,7 +20,7 @@ public class TreeDeal {
 	 * @return 返回一个节点数组
 	 * @throws WrongParamException
 	 */
-	public TNode[] TreeLevel(TNode root, int n) throws WrongParamException {
+	public TNode[] TreeLevel1(TNode root, int n) throws WrongParamException {
 		if (n <= 0) {
 			throw new WrongParamException("n只能是正数");
 		}
@@ -51,6 +51,46 @@ public class TreeDeal {
 			}
 		}
 		return parent.toArray(new TNode[parentSize]);
+	}
+	/**
+	 * 返回一个TNode的LinkedList
+	 * 
+	 * @param root
+	 * @param n
+	 * @return
+	 */
+	public LinkedList<TNode> _TreeLevel(TNode root,int n){
+		LinkedList<TNode> result = new LinkedList<TNode>();
+		if(n == 1){
+			result.add(root);
+			return result;
+		}else{
+			if(root.getLeft() != null){
+				result.addAll(_TreeLevel(root.getLeft(),n-1));
+			}
+			if(root.getRight() != null){
+				result.addAll(_TreeLevel(root.getRight(),n-1));
+			}
+			return result;
+		}
+	}
+	/**
+	 * 返回一个TNode的节点数组
+	 * 
+	 * @param root
+	 * @param n
+	 * @return
+	 */
+	public TNode[] TreeLevel(TNode root, int n) {
+		if (n <= 0) {
+			return null;
+		}
+		LinkedList<TNode> result = _TreeLevel(root, n);
+		if (result.isEmpty()) {
+			return null;
+		}
+		TNode[] tNodes = result.toArray(new TNode[result.size()]);
+		return tNodes;
 	}
 	/**
 	 * 
