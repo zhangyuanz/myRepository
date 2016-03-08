@@ -37,22 +37,25 @@ public class File2buf {
 		if (!fobj.exists() || fobj.isDirectory()) {
 			return null;
 		}
+		//java中int是32位有符号的，数组的最大长度也就是int的正数部分即：2^31也就是MAX_VALUE，不是2^32
 		if (fobj.length() >  Integer.MAX_VALUE ) {
 			throw new WrongParamException("文件太大");
 		}
+		
+		//ByteArrayOutputStream out = null
+		/**
+		 * 根据文件大小创建字节数组流的大小，防止内存浪费 
+		 * out = new ByteArrayOutputStream((int)fobj.length());  
+		 * byte[] bytes = new byte[4096];
+		 * int len; 
+		 * while ((len = in.read(bytes)) != -1) { 
+		 * 		out.write(bytes, 0, len); 
+		 *  }
+		 * return out.toByteArray();
+		 */
+		
 		FileInputStream in = null;
-		//ByteArrayOutputStream out = null;
 		try {
-			/**
-			 * 根据文件大小创建字节数组流的大小，防止内存浪费 
-			 * out = new ByteArrayOutputStream((int)fobj.length());  
-			 * byte[] bytes = new byte[4096];
-			 * int len; 
-			 * while ((len = in.read(bytes)) != -1) { 
-			 * 		out.write(bytes, 0, len); 
-			 *  }
-			 * return out.toByteArray();
-			 */
 			in = new FileInputStream(fobj);
 			int fileLen = (int)fobj.length();
 			byte[] bytes = new byte[fileLen];
