@@ -196,13 +196,14 @@ public class TreeDealTest {
 	 * @return
 	 */
 	public String nodesToString(TNode[] nodes) {
-		String str = "";
+
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < nodes.length; i++) {
 			if (nodes[i] != null) {
-				str = str + nodes[i].getValue();
+				str.append(nodes[i].getValue());
 			}
 		}
-		return str;
+		return str.toString();
 
 	}
 

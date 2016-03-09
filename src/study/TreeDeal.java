@@ -16,22 +16,23 @@ public class TreeDeal {
 	 *            二叉树的根节点
 	 * @param n
 	 *            二叉树的第n层
+	 * @param result
+	 *            待处理的链表
 	 * @return 返回第n层的节点List
 	 */
-	public LinkedList<TNode> _TreeLevel(TNode root, int n) {
-		LinkedList<TNode> result = new LinkedList<TNode>();
+	//20160309 Issues:20160308版本每次迭代都会new一个list对象，效率不高 解决方案：（1）添加LinkedList参数.
+	private LinkedList<TNode> _TreeLevel(TNode root, int n,LinkedList<TNode> result) {
 		if (n == 1) {
-			result.add(root);
-			return result;
+			result.add(root);			
 		} else {
 			if (root.getLeft() != null) {
-				result.addAll(_TreeLevel(root.getLeft(), n - 1));
+				result = _TreeLevel(root.getLeft(), n - 1,result);
 			}
 			if (root.getRight() != null) {
-				result.addAll(_TreeLevel(root.getRight(), n - 1));
-			}
-			return result;
+				result = _TreeLevel(root.getRight(), n - 1,result);
+			}	
 		}
+		return result;
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class TreeDeal {
 		if (n <= 0) {
 			return null;
 		}
-		LinkedList<TNode> result = _TreeLevel(root, n);
+		LinkedList<TNode> result = _TreeLevel(root, n,new LinkedList<TNode>());
 		if (result.isEmpty()) {
 			return null;
 		}
@@ -55,6 +56,24 @@ public class TreeDeal {
 		return tNodes;
 	}
 }	
+	/****************************20160308，迭代要做到最简最优,和20160309版本比起来，此迭代模型要多一层*********************************/
+	/**
+	private LinkedList<TNode> _TreeLevel(TNode root, int n) {
+		LinkedList<TNode> result = new LinkedList<TNode>();
+		if (n == 1) {
+			result.add(root);			
+		} else {
+			if (root.getLeft() != null) {
+				result.addAll( _TreeLevel(root.getLeft(), n - 1,result));
+			}
+			if (root.getRight() != null) {
+				result.addAll( _TreeLevel(root.getRight(), n - 1,result));
+			}	
+		}
+		return result;
+	}
+	*/
+
 	/****************************20160307;提高效率，减少内存使用，但仍然没有递归算法好****************************************/
 	/**
 	 * 将一颗二叉树的第n层节点以数组形式返回，如果层数大于二叉树深度，或者输入负数和0，则返回空
